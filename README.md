@@ -59,7 +59,7 @@ Basic-student-Enrolemtnt-system/
 
    ```bash
    git clone https://github.com/your-username/student-enrollment-dashboard.git
-   cd student-enrollment-dashboard/svfghfv
+   cd student-enrollment-dashboard
    ```
 
 2. **Start local PHP server:**
