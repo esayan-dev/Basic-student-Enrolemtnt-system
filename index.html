@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Admission</title>
+  <style>
+    :root {
+      --primary-color: #3498db;
+      --secondary-color: #2980b9;
+      --accent-color: #e74c3c;
+      --light-color: #ecf0f1;
+      --dark-color: #2c3e50;
+      --success-color: #2ecc71;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f5f7fa;
+      color: var(--dark-color);
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .form-container {
+      background: white;
+      padding: 30px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      width: 100%;
+      max-width: 500px;
+      margin: 20px auto;
+    }
+
+    h2 {
+      color: var(--primary-color);
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 28px;
+      font-weight: 600;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    input, select, button {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      font-size: 16px;
+      transition: var(--transition);
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+    }
+
+    button {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-2px);
+    }
+
+    #responseMsg {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: var(--border-radius);
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .success {
+      background-color: rgba(46, 204, 113, 0.2);
+      color: var(--success-color);
+    }
+
+    .error {
+      background-color: rgba(231, 76, 60, 0.2);
+      color: var(--accent-color);
+    }
+
+    .export-btn {
+      display: inline-block;
+      width: 100%;
+      text-align: center;
+      padding: 12px;
+      background-color: var(--dark-color);
+      color: white;
+      text-decoration: none;
+      border-radius: var(--border-radius);
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .export-btn:hover {
+      background-color: #34495e;
+      transform: translateY(-2px);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      .form-container {
+        padding: 20px;
+      }
+      
+      h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+      
+      input, select, button {
+        padding: 10px 12px;
+        font-size: 15px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      body {
+        padding: 10px;
+      }
+      
+      .form-container {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="form-container">
+  <h2>Student Admission</h2>
+  <form id="admissionForm">
+    <input type="text" name="name" placeholder="Full Name" required>
+    <input type="text" name="mobile" placeholder="Mobile No (10 digits)" required pattern="[0-9]{10}" title="Please enter a 10-digit mobile number">
+    <input type="email" name="email" placeholder="Email Address" required>
+    <select name="gender" required>
+      <option value="">Select Gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select>
+    <button type="submit">Submit Application</button>
+  </form>
+  <div id="responseMsg"></div>
+  <br>
+ 
+</div>
+
+<script>
+document.getElementById('admissionForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const formData = new FormData(form);
+  const responseMsg = document.getElementById('responseMsg');
+  
+  responseMsg.innerHTML = '<div>Processing your application...</div>';
+  responseMsg.className = '';
+
+  fetch('process.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(res => res.text())
+  .then(data => {
+    responseMsg.innerHTML = data;
+    responseMsg.className = 'success';
+    form.reset();
+    
+    // Scroll to response message
+    responseMsg.scrollIntoView({ behavior: 'smooth' });
+  })
+  .catch(error => {
+    responseMsg.innerHTML = "Error occurred while processing your application. Please try again.";
+    responseMsg.className = 'error';
+    console.error('Error:', error);
+  });
+});
+</script>
+
+
+
+</body>
+</html>
