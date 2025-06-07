@@ -82,10 +82,11 @@ Basic-student-Enrolemtnt-system/
 
    ```php
    // admin/index.php
- // Hardcoded admin credentials
-$ADMIN_USERNAME = 'admin';
-$ADMIN_PASSWORD = 'admin123';
-
+   // Modify the following credentials to match your admin accounts
+   // Replace with your actual credentials
+   // Hardcoded admin credentials
+   $ADMIN_USERNAME = 'admin';
+   $ADMIN_PASSWORD = 'admin123';
    ```
 
 ---
